@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 David Lukacs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.khannex;
 
 import java.io.IOException;
@@ -48,11 +64,11 @@ public class DryRun {
         Response getLocationResponse = commandFactory.createCommand( new Request( "getLocation" ) ).execute( context );
         if ( !context.hasException( ) ) {
             String locality = getLocationResponse.getResult( );
-            System.out.println( String.format( "Cert locality:\t%s", locality ) );
+            System.out.println( String.format( "Locality:\t%s", locality ) );
 
             Response signResponse = commandFactory.createCommand( new Request( "makeSign", locality ) ).execute( context );
             if ( !context.hasException( ) ) {
-                System.out.println( String.format( "Signed hash:\t%s", signResponse.getResult( ) ) );
+                System.out.println( String.format( "Signature:\t%s", signResponse.getResult( ) ) );
                 return;
             }
         }

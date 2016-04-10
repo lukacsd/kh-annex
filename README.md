@@ -9,20 +9,21 @@ There are some caveats though:
 - The software is a proof-of-concept: there is no reasonable error handling for example, everything is hard-coded etc.
 - It has been tested on one computer, with one type of card reader and one instance of smart card
 - Works with Google Chrome only
-- Long story short, **no warranty of any kind**
+
+Long story short: **No warranty of any kind. It is encouraged to see this project as a curiosity only.**
 
 I have used the following:
 - pcsclite    1.8.14
 - Java        1.8.0_74
 - Chrome      47.0.2526.106
-- Hidglobal Omnikey 3021
+- Hid Omnikey 3021
 - Ebank card issued in late 2015
 
 ### Installation
-For instructions refer to INSTALL.md
-
-That should be it (..Chrome needs a restart if the setup was done while it was running).
+For instructions refer to the [guide](INSTALL.md).
 
 ### License
 
-Released under [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0.html).
+Utility is released under [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0.html).
+
+Third party bits under [GNU General Public License v2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).

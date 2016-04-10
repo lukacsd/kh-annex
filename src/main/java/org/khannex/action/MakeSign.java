@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 David Lukacs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.khannex.action;
 
 import java.io.IOException;
@@ -10,6 +26,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.khannex.io.CardIO;
 import org.khannex.io.Response;
 
+import openjdk7.BerEncoder;
+
 public class MakeSign extends Command {
 
     @Override
@@ -20,7 +38,7 @@ public class MakeSign extends Command {
         if ( param.isPresent( ) ) {
             CardIO cardio = new CardIO( );
             try {
-                byte[ ] challenge = DigestUtils.sha1( param.get( ) );
+                byte[ ] digest = DigestUtils.sha1( param.get( ) );
                 byte[ ] pin = readPin( ).getBytes( );
 
                 cardio.connect( );
@@ -29,9 +47,9 @@ public class MakeSign extends Command {
                 cardio.transmitSelectDf( new byte[ ] { ( byte ) 0x90, 0x02 } ).assertSuccessful( );
                 cardio.transmitVerify( pin ).assertSuccessful( );
                 cardio.transmitSelectPrivateKey( ).assertSuccessful( );
-                byte[ ] payload = cardio.transmitSign( challenge ).assertSuccessful( ).getData( );
+                byte[ ] signature = cardio.transmitSign( digest ).assertSuccessful( ).getData( );
 
-                String result = Base64.getEncoder( ).encodeToString( collate( challenge, payload ) );
+                String result = Base64.getEncoder( ).encodeToString( getBerEncodedResult( digest, signature ) );
                 retval = response( ).withResult( result ).build( );
             } catch ( Exception ex ) {
                 context.setException( ex );
@@ -50,27 +68,24 @@ public class MakeSign extends Command {
     }
 
     /*
-     * FIXME: this doesn't feel right. the static bytes are following a pattern
-     * i saw in the official messages. i'm pretty sure though it is some rule
-     * based format and not completely arbitrary .. some asn1 maybe?
-     * anyhow, unless we are dealing with other than 20 byte hashes this should
-     * work. in other cases, i would imagine the effect is that the server cannot
-     * deserialize the response, discard it and deny the operation.
+     * The result is encoded according to the Basic Encoding Rules for ASN.1
+     * Schematic representation as follows:
+     * 
+     *   SignResult ::= SEQUENCE {
+     *     digest OCTET STRING,
+     *     signature OCTET STRING
+     *   }
      */
-    private byte[ ] collate( byte[ ] array1, byte[ ] array2 ) {
-        byte[ ] retval = new byte[ 5 + array1.length + 3 + array2.length ];
-        int offset = 0;
-        retval[ offset++ ] = 0x30;
-        retval[ offset++ ] = ( byte ) 0x81;
-        retval[ offset++ ] = ( byte ) 0x99;
-        retval[ offset++ ] = 0x04;
-        retval[ offset++ ] = ( byte ) array1.length;
-        System.arraycopy( array1, 0, retval, offset, array1.length );
-        offset += array1.length;
-        retval[ offset++ ] = 0x04;
-        retval[ offset++ ] = ( byte ) 0x81;
-        retval[ offset++ ] = ( byte ) array2.length;
-        System.arraycopy( array2, 0, retval, offset, array2.length );
+    private byte[ ] getBerEncodedResult( byte[ ] digest, byte[ ] signature ) {
+        byte[ ] arr = new byte[ 64 + digest.length + signature.length ];
+        BerEncoder encoder = new BerEncoder( arr );
+        encoder.openSequence( );
+        encoder.putOctetString( signature );
+        encoder.putOctetString( digest );
+        encoder.closeSequence( );
+        int length = encoder.trim( );
+        byte[ ] retval = new byte[ length ];
+        System.arraycopy( arr, 0, retval, 0, length );
         return retval;
     }
 
