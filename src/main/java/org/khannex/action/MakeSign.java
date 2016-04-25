@@ -23,10 +23,9 @@ import java.util.Base64;
 import java.util.Optional;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.khannex.io.BerSequenceBuilder;
 import org.khannex.io.CardIO;
 import org.khannex.io.Response;
-
-import openjdk7.BerEncoder;
 
 public class MakeSign extends Command {
 
@@ -77,16 +76,7 @@ public class MakeSign extends Command {
      *   }
      */
     private byte[ ] getBerEncodedResult( byte[ ] digest, byte[ ] signature ) {
-        byte[ ] arr = new byte[ 64 + digest.length + signature.length ];
-        BerEncoder encoder = new BerEncoder( arr );
-        encoder.openSequence( );
-        encoder.putOctetString( signature );
-        encoder.putOctetString( digest );
-        encoder.closeSequence( );
-        int length = encoder.trim( );
-        byte[ ] retval = new byte[ length ];
-        System.arraycopy( arr, 0, retval, 0, length );
-        return retval;
+        return new BerSequenceBuilder( ).withOctetString( digest ).withOctetString( signature ).build( );
     }
 
 }

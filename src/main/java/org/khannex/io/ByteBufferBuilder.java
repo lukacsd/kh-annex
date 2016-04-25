@@ -19,10 +19,10 @@ package org.khannex.io;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class BufferBuilder {
+public class ByteBufferBuilder {
     private ByteBuffer buffer;
 
-    public BufferBuilder( int capacity ) {
+    public ByteBufferBuilder( int capacity ) {
         this.buffer = ByteBuffer.allocate( capacity );
         this.buffer.order( getByteOrderSetting( ) );
     }
@@ -31,12 +31,12 @@ public class BufferBuilder {
         return buffer.remaining( ) == 0;
     }
 
-    public BufferBuilder put( int value ) {
+    public ByteBufferBuilder put( int value ) {
         buffer.putInt( value );
         return this;
     }
 
-    public BufferBuilder put( byte value ) {
+    public ByteBufferBuilder put( byte value ) {
         buffer.put( value );
         return this;
     }

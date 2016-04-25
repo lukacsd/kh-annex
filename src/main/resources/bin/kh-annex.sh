@@ -7,4 +7,4 @@ JVM_ARGS="-Dsun.security.smartcardio.library=/lib/x86_64-linux-gnu/libpcsclite.s
 JVM_ARGS="${JVM_ARGS} -Dorg.khannex.io.endianness=LITTLE_ENDIAN"
 JVM_ARGS="${JVM_ARGS} -Dorg.khannex.logDir=/var/tmp/"
 
-java $JVM_ARGS -jar kh-annex-0.0.2.jar "$@"
+java $JVM_ARGS -jar kh-annex-0.0.3.jar "$@"

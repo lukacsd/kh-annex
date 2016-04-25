@@ -24,6 +24,4 @@ For instructions refer to the [guide](INSTALL.md).
 
 ### License
 
-Utility is released under [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0.html).
-
-Third party bits under [GNU General Public License v2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html).
+Released under [Apache License v2](http://www.apache.org/licenses/LICENSE-2.0.html).

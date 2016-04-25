@@ -25,7 +25,7 @@ import java.util.jar.Manifest;
 
 import org.khannex.action.CommandFactory;
 import org.khannex.action.Context;
-import org.khannex.io.BufferBuilder;
+import org.khannex.io.ByteBufferBuilder;
 import org.khannex.io.Request;
 import org.khannex.io.Response;
 
@@ -56,7 +56,7 @@ public class DryRun {
                 String.format( "Java version:\t%s, %s", System.getProperty( "java.version" ), System.getProperty( "java.vendor" ) ) );
         System.out.println( String.format( "PC/SC impl:\t%s", System.getProperty( "sun.security.smartcardio.library" ) ) );
         System.out.println( String.format( "Log directory:\t%s", System.getProperty( "org.khannex.logDir" ) ) );
-        System.out.println( String.format( "Endianness:\t%s", new BufferBuilder( 0 ).getByteOrderSetting( ) ) );
+        System.out.println( String.format( "Endianness:\t%s", new ByteBufferBuilder( 0 ).getByteOrderSetting( ) ) );
     }
 
     private void executeCardCommands() {

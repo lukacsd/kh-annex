@@ -51,7 +51,7 @@ public class ChromeIO {
     }
 
     private String getMessage() throws IOException {
-        BufferBuilder buffer = new BufferBuilder( 4 );
+        ByteBufferBuilder buffer = new ByteBufferBuilder( 4 );
         int input = 0;
         while ( ( input = stream.read( ) ) != -1 ) {
             buffer.put( ( byte ) input );
@@ -82,7 +82,7 @@ public class ChromeIO {
 
     private byte[ ] encodeMessageBytes( String message ) throws IOException {
         byte[ ] msg = message.getBytes( );
-        byte[ ] length = new BufferBuilder( 4 ).put( msg.length ).buildBytes( );
+        byte[ ] length = new ByteBufferBuilder( 4 ).put( msg.length ).buildBytes( );
 
         byte[ ] retval = new byte[ length.length + msg.length ];
         System.arraycopy( length, 0, retval, 0, 4 );
