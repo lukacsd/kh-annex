@@ -7,6 +7,14 @@ Basically involves three steps (more or less):
 
 ## Install binary dependencies
 
+First make sure that you have the driver installed, e.g. from https://www.hidglobal.com/drivers.
+
+Also make sure you installed the PC/SC daemon and tools, e.g.:
+
+```bash
+sudo apt-get install pcscd pcsc-tools opensc
+```
+
 The [javax.smartcardio](http://docs.oracle.com/javase/8/docs/jre/api/security/smartcardio/spec/index.html?javax/smartcardio/package-summary.html)
 package in the Oracle JDK wraps the SCard API (PC/SC). PCSC-Lite is a Linux
 implementation of the API. In Ubuntu derivatives the library is shipped
@@ -28,7 +36,7 @@ mvn clean package
 
 ### Distribute
 
-Place jar and script to a place of your liking. eg:
+Place jar and script to a place of your liking. e.g.:
 
 ```bash
 KHA_VERSION="0.0.3" && \
@@ -43,6 +51,8 @@ rm -f ${KHA_PREFIX}/kh-annex && \
 ln -s ${KHA_PREFIX}/kh-annex-${KHA_VERSION} ${KHA_PREFIX}/kh-annex
 __SUDO__
 ```
+
+Or you can just run `./src/main/resources/bin/dist.sh`.
 
 ### PIN setup
 
@@ -106,5 +116,7 @@ __SUDO__
 **Note:** make sure the path to the binary reflects your setup. Also, the "name"
 and "allowed_origins" values has to match the netbank plugin's expectations,
 so just change the path if necessary.
+
+For defaults, you can just run `./src/main/resources/bin/config-chrome.sh`.
 
 Chrome needs a restart if the setup was done while it was running.
