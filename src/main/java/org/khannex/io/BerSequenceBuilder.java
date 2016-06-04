@@ -34,7 +34,7 @@ public class BerSequenceBuilder {
     }
 
     public byte[] build() {
-        byte[] wrk = new byte[16 + dataLength];
+        final byte[] wrk = new byte[16 + dataLength];
 
         final BerEncoder enc = new BerEncoder(wrk);
         enc.openSequence();

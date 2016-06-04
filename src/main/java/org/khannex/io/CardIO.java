@@ -48,6 +48,8 @@ public class CardIO {
             if (terminals.size() > 0) {
                 card = terminals.get(0).connect("*");
                 channel = card.getBasicChannel();
+            } else {
+                throw new RuntimeException("No terminals");
             }
         } catch (CardException e) {
             throw new RuntimeException(e);
@@ -107,7 +109,7 @@ public class CardIO {
     public CardResponse transmitGetBinary() {
         byte[] retval = new byte[0];
 
-        CardResponse response = null;
+        CardResponse response;
         do {
             response = transmit(new byte[]{0x00, (byte) 0xB0, (byte) (retval.length >> 8), (byte) (retval.length & 0xFF),
                 (byte) 0xFF});

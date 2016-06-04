@@ -63,7 +63,7 @@ public class DryRun {
         final Context context = new Context();
         final Response getLocationResponse = commandFactory.createCommand(new Request("getLocation")).execute(context);
         if (!context.hasException()) {
-            String locality = getLocationResponse.getResult();
+            final String locality = getLocationResponse.getResult();
             System.out.println(String.format("Locality:\t%s", locality));
 
             final Response signResponse = commandFactory.createCommand(new Request("makeSign", locality)).execute(context);

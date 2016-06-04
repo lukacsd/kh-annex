@@ -51,7 +51,7 @@ public class ByteBufferBuilder {
         return buffer.array();
     }
 
-    public ByteOrder getByteOrderSetting() {
+    public final ByteOrder getByteOrderSetting() {
         ByteOrder retval = ByteOrder.LITTLE_ENDIAN;
 
         try {
