@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.khannex.action;
 
 import java.io.IOException;
@@ -30,32 +29,32 @@ import org.khannex.io.Response;
 public class MakeSign extends Command {
 
     @Override
-    public Response execute( Context context ) {
+    public Response execute(Context context) {
         Response retval = null;
 
-        Optional<String> param = getNextParam( );
-        if ( param.isPresent( ) ) {
-            CardIO cardio = new CardIO( );
+        final Optional<String> param = getNextParam();
+        if (param.isPresent()) {
+            final CardIO cardio = new CardIO();
             try {
-                byte[ ] digest = DigestUtils.sha1( param.get( ) );
-                byte[ ] pin = readPin( ).getBytes( );
+                final byte[] digest = DigestUtils.sha1(param.get());
+                final byte[] pin = readPin().getBytes();
 
-                cardio.connect( );
-                cardio.transmitReset( ).assertSuccessful( );
-                cardio.transmitSelectDf( new byte[ ] { 0x50, 0x11 } ).assertSuccessful( );
-                cardio.transmitSelectDf( new byte[ ] { ( byte ) 0x90, 0x02 } ).assertSuccessful( );
-                cardio.transmitVerify( pin ).assertSuccessful( );
-                cardio.transmitSelectPrivateKey( ).assertSuccessful( );
-                byte[ ] signature = cardio.transmitSign( digest ).assertSuccessful( ).getData( );
+                cardio.connect();
+                cardio.transmitReset().assertSuccessful();
+                cardio.transmitSelectDf(new byte[]{0x50, 0x11}).assertSuccessful();
+                cardio.transmitSelectDf(new byte[]{(byte) 0x90, 0x02}).assertSuccessful();
+                cardio.transmitVerify(pin).assertSuccessful();
+                cardio.transmitSelectPrivateKey().assertSuccessful();
+                final byte[] signature = cardio.transmitSign(digest).assertSuccessful().getData();
 
-                String result = Base64.getEncoder( ).encodeToString( getBerEncodedResult( digest, signature ) );
-                retval = response( ).withResult( result ).build( );
-            } catch ( Exception ex ) {
-                context.setException( ex );
+                final String result = Base64.getEncoder().encodeToString(getBerEncodedResult(digest, signature));
+                retval = response().withResult(result).build();
+            } catch (Exception ex) {
+                context.setException(ex);
 
-                retval = response( ).build( );
+                retval = response().build();
             } finally {
-                cardio.disconnect( );
+                cardio.disconnect();
             }
         }
 
@@ -63,7 +62,7 @@ public class MakeSign extends Command {
     }
 
     private String readPin() throws IOException {
-        return new String( Files.readAllBytes( Paths.get( System.getProperty( "user.home" ), ".khpass" ) ) );
+        return new String(Files.readAllBytes(Paths.get(System.getProperty("user.home"), ".khpass")));
     }
 
     /*
@@ -75,8 +74,8 @@ public class MakeSign extends Command {
      *     signature OCTET STRING
      *   }
      */
-    private byte[ ] getBerEncodedResult( byte[ ] digest, byte[ ] signature ) {
-        return new BerSequenceBuilder( ).withOctetString( digest ).withOctetString( signature ).build( );
+    private byte[] getBerEncodedResult(byte[] digest, byte[] signature) {
+        return new BerSequenceBuilder().withOctetString(digest).withOctetString(signature).build();
     }
 
 }

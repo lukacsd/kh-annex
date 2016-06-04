@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.khannex.io;
 
 import java.io.IOException;
@@ -24,75 +23,76 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ChromeIO {
-    private static final Logger LOG = LoggerFactory.getLogger( ChromeIO.class );
 
-    private InputStreamReader stream;
-    private ObjectMapper mapper;
+    private static final Logger LOG = LoggerFactory.getLogger(ChromeIO.class);
 
-    public ChromeIO( ) {
-        this.stream = new InputStreamReader( System.in );
-        this.mapper = new ObjectMapper( );
+    private final InputStreamReader stream;
+    private final ObjectMapper mapper;
+
+    public ChromeIO() {
+        this.stream = new InputStreamReader(System.in);
+        this.mapper = new ObjectMapper();
     }
 
     public Request getRequest() throws IOException {
-        String msg = getMessage( );
+        String msg = getMessage();
 
-        LOG.debug( String.format( "in=[%s]", msg ) );
+        LOG.debug(String.format("in=[%s]", msg));
 
-        return fromJson( msg, Request.class );
+        return fromJson(msg, Request.class);
     }
 
-    public void sendResponse( Response response ) throws IOException {
-        String msg = toJson( response );
+    public void sendResponse(Response response) throws IOException {
+        String msg = toJson(response);
 
-        LOG.debug( String.format( "out=[%s]", msg ) );
+        LOG.debug(String.format("out=[%s]", msg));
 
-        sendMessage( msg );
+        sendMessage(msg);
     }
 
     private String getMessage() throws IOException {
-        ByteBufferBuilder buffer = new ByteBufferBuilder( 4 );
-        int input = 0;
-        while ( ( input = stream.read( ) ) != -1 ) {
-            buffer.put( ( byte ) input );
+        ByteBufferBuilder buffer = new ByteBufferBuilder(4);
+        int input;
+        while ((input = stream.read()) != -1) {
+            buffer.put((byte) input);
 
-            if ( buffer.isFull( ) ) {
-                int inputLength = buffer.buildInt( );
-                char[ ] chars = new char[ inputLength ];
-                stream.read( chars );
+            if (buffer.isFull()) {
+                int inputLength = buffer.buildInt();
+                char[] chars = new char[inputLength];
+                stream.read(chars);
 
-                return String.valueOf( chars );
+                return String.valueOf(chars);
             }
         }
 
         return null;
     }
 
-    private <T> T fromJson( String json, Class<T> type ) throws IOException {
-        if ( json != null && !json.isEmpty( ) ) {
-            return mapper.readValue( json, type );
+    private <T> T fromJson(String json, Class<T> type) throws IOException {
+        if (json != null && !json.isEmpty()) {
+            return mapper.readValue(json, type);
         }
 
         return null;
     }
 
-    private void sendMessage( String message ) throws IOException {
-        System.out.write( encodeMessageBytes( message ) );
+    private void sendMessage(String message) throws IOException {
+        System.out.write(encodeMessageBytes(message));
     }
 
-    private byte[ ] encodeMessageBytes( String message ) throws IOException {
-        byte[ ] msg = message.getBytes( );
-        byte[ ] length = new ByteBufferBuilder( 4 ).put( msg.length ).buildBytes( );
+    private byte[] encodeMessageBytes(String message) throws IOException {
+        byte[] msg = message.getBytes();
+        byte[] length = new ByteBufferBuilder(4).put(msg.length).buildBytes();
 
-        byte[ ] retval = new byte[ length.length + msg.length ];
-        System.arraycopy( length, 0, retval, 0, 4 );
-        System.arraycopy( msg, 0, retval, 4, msg.length );
+        byte[] retval = new byte[length.length + msg.length];
+        System.arraycopy(length, 0, retval, 0, 4);
+        System.arraycopy(msg, 0, retval, 4, msg.length);
 
         return retval;
     }
 
-    private String toJson( Object object ) throws IOException {
-        return mapper.writeValueAsString( object );
+    private String toJson(Object object) throws IOException {
+        return mapper.writeValueAsString(object);
     }
 
 }
