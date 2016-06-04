@@ -17,7 +17,7 @@ package org.khannex.action;
 
 import org.khannex.io.Response;
 
-public class getNonstandardChars extends Command {
+public class GetNonstandardChars extends Command {
 
     @Override
     public Response execute(Context context) {

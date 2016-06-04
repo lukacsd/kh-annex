@@ -44,7 +44,7 @@ public class CommandFactory {
                     retval = new GetLastError();
                     break;
                 case "getNonstandardChars":
-                    retval = new getNonstandardChars();
+                    retval = new GetNonstandardChars();
                     break;
                 default:
                     throw new IllegalArgumentException(String.format("unknown command [%s]", request.getCommand()));
