@@ -45,7 +45,7 @@ public class DryRun {
     }
 
     private void printImplementationDetails() {
-        Attributes manifest = getManifest();
+        final Attributes manifest = getManifest();
         System.out.println(
                 String.format("%s %s %s %s", manifest.getValue(Attributes.Name.IMPLEMENTATION_TITLE), manifest.getValue("Built-By"),
                         manifest.getValue(Attributes.Name.IMPLEMENTATION_VERSION), manifest.getValue("Build-Time")));
@@ -60,13 +60,13 @@ public class DryRun {
     }
 
     private void executeCardCommands() {
-        Context context = new Context();
-        Response getLocationResponse = commandFactory.createCommand(new Request("getLocation")).execute(context);
+        final Context context = new Context();
+        final Response getLocationResponse = commandFactory.createCommand(new Request("getLocation")).execute(context);
         if (!context.hasException()) {
             String locality = getLocationResponse.getResult();
             System.out.println(String.format("Locality:\t%s", locality));
 
-            Response signResponse = commandFactory.createCommand(new Request("makeSign", locality)).execute(context);
+            final Response signResponse = commandFactory.createCommand(new Request("makeSign", locality)).execute(context);
             if (!context.hasException()) {
                 System.out.println(String.format("Signature:\t%s", signResponse.getResult()));
                 return;
@@ -77,10 +77,10 @@ public class DryRun {
     }
 
     private Attributes getManifest() {
-        Attributes retval = new Attributes();
+        final Attributes retval = new Attributes();
 
         try {
-            Enumeration<URL> list = getClass().getClassLoader().getResources(JarFile.MANIFEST_NAME);
+            final Enumeration<URL> list = getClass().getClassLoader().getResources(JarFile.MANIFEST_NAME);
             if (list.hasMoreElements()) {
                 URL url = list.nextElement();
                 Manifest manifest = new Manifest(url.openStream());

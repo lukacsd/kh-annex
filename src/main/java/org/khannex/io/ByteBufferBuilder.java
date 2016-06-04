@@ -20,7 +20,7 @@ import java.nio.ByteOrder;
 
 public class ByteBufferBuilder {
 
-    private ByteBuffer buffer;
+    private final ByteBuffer buffer;
 
     public ByteBufferBuilder(int capacity) {
         this.buffer = ByteBuffer.allocate(capacity);

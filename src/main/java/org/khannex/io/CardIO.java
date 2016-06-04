@@ -43,8 +43,8 @@ public class CardIO {
 
     public void connect() {
         try {
-            TerminalFactory factory = TerminalFactory.getDefault();
-            List<CardTerminal> terminals = factory.terminals().list();
+            final TerminalFactory factory = TerminalFactory.getDefault();
+            final List<CardTerminal> terminals = factory.terminals().list();
             if (terminals.size() > 0) {
                 card = terminals.get(0).connect("*");
                 channel = card.getBasicChannel();
@@ -68,7 +68,7 @@ public class CardIO {
     }
 
     public CardResponse transmitSelectDf(byte[] df) {
-        byte[] apdu = new byte[SELECT.length + df.length];
+        final byte[] apdu = new byte[SELECT.length + df.length];
         System.arraycopy(SELECT, 0, apdu, 0, SELECT.length);
         System.arraycopy(df, 0, apdu, SELECT.length, df.length);
 
@@ -84,8 +84,8 @@ public class CardIO {
     }
 
     public CardResponse transmitVerify(byte[] pin) {
-        byte[] paddedPin = new byte[64];
-        byte[] apdu = new byte[VERIFY.length + paddedPin.length];
+        final byte[] paddedPin = new byte[64];
+        final byte[] apdu = new byte[VERIFY.length + paddedPin.length];
 
         System.arraycopy(VERIFY, 0, apdu, 0, VERIFY.length);
         Arrays.fill(paddedPin, (byte) 0xFF);
@@ -96,7 +96,7 @@ public class CardIO {
     }
 
     public CardResponse transmitSign(byte[] value) {
-        byte[] apdu = new byte[SIGN.length + value.length];
+        final byte[] apdu = new byte[SIGN.length + value.length];
 
         System.arraycopy(SIGN, 0, apdu, 0, SIGN.length);
         System.arraycopy(value, 0, apdu, SIGN.length, value.length);
@@ -160,7 +160,7 @@ public class CardIO {
         }
 
         public byte[] appendDataTo(byte[] appendTo) {
-            byte[] retval = new byte[appendTo.length + getData().length];
+            final byte[] retval = new byte[appendTo.length + getData().length];
 
             System.arraycopy(appendTo, 0, retval, 0, appendTo.length);
             System.arraycopy(getData(), 0, retval, appendTo.length, getData().length);

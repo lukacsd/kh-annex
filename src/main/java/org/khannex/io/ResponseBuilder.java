@@ -36,7 +36,7 @@ public class ResponseBuilder {
     }
 
     public Response build() {
-        Response retval = new Response();
+        final Response retval = new Response();
 
         retval.setErrorCode(errorCode);
         retval.setErrorText(Base64.getEncoder().encodeToString(errorText));

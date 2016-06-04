@@ -35,7 +35,7 @@ public class ChromeIO {
     }
 
     public Request getRequest() throws IOException {
-        String msg = getMessage();
+        final String msg = getMessage();
 
         LOG.debug(String.format("in=[%s]", msg));
 
@@ -43,7 +43,7 @@ public class ChromeIO {
     }
 
     public void sendResponse(Response response) throws IOException {
-        String msg = toJson(response);
+        final String msg = toJson(response);
 
         LOG.debug(String.format("out=[%s]", msg));
 
@@ -51,7 +51,7 @@ public class ChromeIO {
     }
 
     private String getMessage() throws IOException {
-        ByteBufferBuilder buffer = new ByteBufferBuilder(4);
+        final ByteBufferBuilder buffer = new ByteBufferBuilder(4);
         int input;
         while ((input = stream.read()) != -1) {
             buffer.put((byte) input);
@@ -81,10 +81,10 @@ public class ChromeIO {
     }
 
     private byte[] encodeMessageBytes(String message) throws IOException {
-        byte[] msg = message.getBytes();
-        byte[] length = new ByteBufferBuilder(4).put(msg.length).buildBytes();
+        final byte[] msg = message.getBytes();
+        final byte[] length = new ByteBufferBuilder(4).put(msg.length).buildBytes();
 
-        byte[] retval = new byte[length.length + msg.length];
+        final byte[] retval = new byte[length.length + msg.length];
         System.arraycopy(length, 0, retval, 0, 4);
         System.arraycopy(msg, 0, retval, 4, msg.length);
 
