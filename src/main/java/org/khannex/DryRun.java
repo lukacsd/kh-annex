@@ -74,6 +74,11 @@ public class DryRun {
         }
 
         System.out.println("Card comms error");
+
+        if (context.hasException()) {
+            System.out.println();
+            context.getException().printStackTrace();
+        }
     }
 
     private Attributes getManifest() {
