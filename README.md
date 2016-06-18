@@ -1,4 +1,4 @@
-## Smart Card signing utility for K&H EBank
+## Smart Card signing utility for K&H e-bank
 
 This project demonstrates on how to sign data with an Oberthur Authentic smart card to comply the semantics of K&H Hungary internet banking system. In essence, it can be used as a drop in replacement for the middleware provided by the institution.
 

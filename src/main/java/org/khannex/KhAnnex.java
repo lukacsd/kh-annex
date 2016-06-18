@@ -59,7 +59,7 @@ public class KhAnnex {
             final CommandLine cl = new DefaultParser().parse(options, args);
             if (cl.hasOption("help")) {
                 new HelpFormatter().printHelp("kh-annex",
-                        "Smart card signing utility for K&H EBank. "
+                        "Smart card signing utility for K&H e-bank. "
                         + "When executed without parameters, stdin will be parsed according to "
                         + "Google Chrome Native Messaging Host semantics.\n\n",
                         options, "");
