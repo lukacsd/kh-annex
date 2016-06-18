@@ -16,8 +16,8 @@ I have used the following:
 - pcsclite    1.8.14
 - Java        1.8.0_74
 - Chrome      47.0.2526.106
-- Hid Omnikey 3021
-- Ebank card issued in late 2015
+- HID Omnikey 3021
+- e-bank card issued in late 2015
 
 ### Installation
 For instructions refer to the [guide](INSTALL.md).
