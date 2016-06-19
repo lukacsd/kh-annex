@@ -43,7 +43,7 @@ public class GetLocation extends Command {
             byte[] payload = cardio.transmitGetBinary().assertSuccessful().getData();
 
             retval = response().withResult(getCertificateLocality(payload)).build();
-        } catch (CertificateException | InvalidNameException ex) {
+        } catch (Exception ex) {
             context.setException(ex);
 
             retval = response().build();
