@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.khannex.action;
 
 public class Context {
+
     private Exception exception;
 
     public Exception getException() {
         return exception;
     }
 
-    public void setException( Exception exception ) {
+    public void setException(Exception exception) {
         this.exception = exception;
     }
 

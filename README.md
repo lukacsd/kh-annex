@@ -1,4 +1,4 @@
-## Smart Card signing utility for K&H EBank
+## Smart Card signing utility for K&H e-bank
 
 This project demonstrates on how to sign data with an Oberthur Authentic smart card to comply the semantics of K&H Hungary internet banking system. In essence, it can be used as a drop in replacement for the middleware provided by the institution.
 
@@ -16,8 +16,8 @@ I have used the following:
 - pcsclite    1.8.14
 - Java        1.8.0_74
 - Chrome      47.0.2526.106
-- Hid Omnikey 3021
-- Ebank card issued in late 2015
+- HID Omnikey 3021
+- e-bank card issued in late 2015
 
 ### Installation
 For instructions refer to the [guide](INSTALL.md).

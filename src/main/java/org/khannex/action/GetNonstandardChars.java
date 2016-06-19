@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.khannex.action;
 
 import org.khannex.io.Response;
 
-public class getNonstandardChars extends Command {
+public class GetNonstandardChars extends Command {
 
     @Override
-    public Response execute( Context context ) {
-        return response( ).build( );
+    public Response execute(Context context) {
+        return response().build();
     }
 
 }

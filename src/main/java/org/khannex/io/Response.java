@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.khannex.io;
 
 public class Response {
+
     private String errorCode;
     private String errorText;
     private String result;
@@ -25,7 +25,7 @@ public class Response {
         return errorCode;
     }
 
-    public void setErrorCode( String errorCode ) {
+    public void setErrorCode(String errorCode) {
         this.errorCode = errorCode;
     }
 
@@ -33,7 +33,7 @@ public class Response {
         return errorText;
     }
 
-    public void setErrorText( String errorText ) {
+    public void setErrorText(String errorText) {
         this.errorText = errorText;
     }
 
@@ -41,7 +41,7 @@ public class Response {
         return result;
     }
 
-    public void setResult( String result ) {
+    public void setResult(String result) {
         this.result = result;
     }
 

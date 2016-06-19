@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.khannex.action;
 
 import org.khannex.io.Response;
@@ -21,16 +20,16 @@ import org.khannex.io.Response;
 public class GetLastError extends Command {
 
     @Override
-    public Response execute( Context context ) {
-        Response retval = null;
+    public Response execute(Context context) {
+        final Response retval;
 
-        if ( context.hasException( ) ) {
-            retval = response( ).withResult( "-14" ).build( );
+        if (context.hasException()) {
+            retval = response().withResult("-14").build();
         } else {
-            retval = response( ).withResult( "1" ).build( );
+            retval = response().withResult("1").build();
         }
 
-        context.clear( );
+        context.clear();
 
         return retval;
     }

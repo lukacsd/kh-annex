@@ -13,52 +13,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.khannex.io;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class ByteBufferBuilder {
-    private ByteBuffer buffer;
 
-    public ByteBufferBuilder( int capacity ) {
-        this.buffer = ByteBuffer.allocate( capacity );
-        this.buffer.order( getByteOrderSetting( ) );
+    private final ByteBuffer buffer;
+
+    public ByteBufferBuilder(int capacity) {
+        this.buffer = ByteBuffer.allocate(capacity);
+        this.buffer.order(getByteOrderSetting());
     }
 
     public boolean isFull() {
-        return buffer.remaining( ) == 0;
+        return buffer.remaining() == 0;
     }
 
-    public ByteBufferBuilder put( int value ) {
-        buffer.putInt( value );
+    public ByteBufferBuilder put(int value) {
+        buffer.putInt(value);
         return this;
     }
 
-    public ByteBufferBuilder put( byte value ) {
-        buffer.put( value );
+    public ByteBufferBuilder put(byte value) {
+        buffer.put(value);
         return this;
     }
 
     public int buildInt() {
-        buffer.position( 0 );
-        return buffer.getInt( );
+        buffer.position(0);
+        return buffer.getInt();
     }
 
-    public byte[ ] buildBytes() {
-        buffer.position( 0 );
-        return buffer.array( );
+    public byte[] buildBytes() {
+        buffer.position(0);
+        return buffer.array();
     }
 
-    public ByteOrder getByteOrderSetting() {
+    public final ByteOrder getByteOrderSetting() {
         ByteOrder retval = ByteOrder.LITTLE_ENDIAN;
 
         try {
-            if ( "BIG_ENDIAN".equalsIgnoreCase( System.getProperty( "org.khannex.io.endianness" ) ) ) {
+            if ("BIG_ENDIAN".equalsIgnoreCase(System.getProperty("org.khannex.io.endianness"))) {
                 retval = ByteOrder.BIG_ENDIAN;
             }
-        } catch ( Exception ex ) {
+        } catch (Exception ex) {
         }
 
         return retval;
