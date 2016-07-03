@@ -85,11 +85,14 @@ public class DryRun {
         final Attributes retval = new Attributes();
 
         try {
-            final Enumeration<URL> list = getClass().getClassLoader().getResources(JarFile.MANIFEST_NAME);
-            if (list.hasMoreElements()) {
-                URL url = list.nextElement();
-                Manifest manifest = new Manifest(url.openStream());
-                retval.putAll(manifest.getMainAttributes());
+            final Enumeration<URL> list = getClass( ).getClassLoader( ).getResources( JarFile.MANIFEST_NAME );
+            while ( list.hasMoreElements( ) ) {
+                URL url = list.nextElement( );
+                if ( url.getPath( ) != null && url.getPath( ).matches( ".*kh-annex.*" ) ) {
+                    Manifest manifest = new Manifest( url.openStream( ) );
+                    retval.putAll( manifest.getMainAttributes( ) );
+                    break;
+                }
             }
         } catch (IOException e) {
         }

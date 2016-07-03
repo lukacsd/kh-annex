@@ -1,6 +1,23 @@
+# A note on the card terminal
+
+I believe, majority of the customers were provided with an
+[OMNIKEY AG CardMan 3021](https://www.hidglobal.com/products/readers/omnikey/3021-usb).
+This terminal is [supported](http://pcsclite.alioth.debian.org/ccid/shouldwork.html#0x076B0x3021)
+by the Linux SmartCard tools. (Even though it's in the "should
+work" section).
+
+Nevertheless, compatibility can be checked at http://pcsclite.alioth.debian.org/select_readers
+
+In case your terminal is not supported, you will need to manually
+install a driver. Unfortunately, can't cover those instructions
+here as it is some highly specific scenario. If you are determined
+to use the kh-annex tool, I would say don't worry about it for now.
+Below install has to be done anyway, just proceed with the steps
+and shake out the system with a dry-run at the end.
+
 # Installation
 
-Basically involves three steps (more or less):
+This will basically involve three steps:
 - install binary dependencies
 - deploy middleware
 - install K&H Google Chrome Extension and set up a bridge between the two
@@ -8,13 +25,12 @@ Basically involves three steps (more or less):
 ## Install binary dependencies
 
 The [javax.smartcardio](http://docs.oracle.com/javase/8/docs/jre/api/security/smartcardio/spec/index.html?javax/smartcardio/package-summary.html)
-package in the Oracle JDK wraps the SCard API (PC/SC).
-PCSC-Lite is a Linux implementation of the API.
-In Ubuntu derivatives the library is shipped with the libpcsclite-dev package.
-You also need to install the PC/SC daemon and tools, and the OpenSC smart card tools.
+JDK package wraps the SCard API (PC/SC). You will need to install a
+PC/SC implementation - PCSC-Lite, along with some smart card tools and
+utilities.
 
 ```bash
-sudo apt-get install pcscd pcsc-tools opensc libpcsclite-dev
+sudo apt-get install pcscd pcsc-tools opensc
 ```
 
 ## Deploy middleware
@@ -29,9 +45,13 @@ mvn clean package
 
 ### Distribute
 
-Place jar and script to a place of your liking,
-or just use `./src/main/resources/bin/dist.sh` to install it into `/usr/local/kh-annex`.
-(`sudo` might be needed.)
+Place jar and script to a place of your liking, for example:
+
+```bash
+export KHA_PREFIX="/usr/local" && sudo --preserve-env src/main/resources/bin/dist.sh
+```
+
+(installs to `/usr/local/kh-annex`)
 
 ### PIN setup
 
@@ -74,7 +94,10 @@ Follow the instructions on the K&H website.
 
 [Official doc](https://developer.chrome.com/extensions/nativeMessaging)
 
-For defaults, you can just run `KHA_BOOTSTRAP="/usr/local/kh-annex/kh-annex.sh" && sudo ./src/main/resources/bin/config-chrome.sh`.
-Just make sure the bootstrap path reflects your setup.
+Make sure the bootstrap path reflects your setup (from the distribute step) and execute:
+
+```bash
+export KHA_BOOTSTRAP="/usr/local/kh-annex/kh-annex.sh" && sudo --preserve-env src/main/resources/bin/config-chrome.sh
+```
 
 Chrome needs a restart if the setup was done while it was running.

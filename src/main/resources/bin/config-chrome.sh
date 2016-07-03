@@ -1,5 +1,7 @@
 #!/bin/bash
+
 if [ -z "$KHA_BOOTSTRAP" ]; then KHA_BOOTSTRAP="/usr/local/kh-annex/kh-annex.sh"; fi
+
 mkdir -p /etc/opt/chrome/native-messaging-hosts/ && \
 cat > /etc/opt/chrome/native-messaging-hosts/com.khb.auth.plugin.chrome.json <<- __EOF__
 {
